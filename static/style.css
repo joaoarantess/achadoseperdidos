@@ -1,0 +1,380 @@
+:root {
+  --fundo: #e8edf1;
+  --papel: #ffffff;
+  --tinta: #17222d;
+  --tinta-suave: #52606d;
+  --linha: #cdd6de;
+  --perdido: #c93c3c;
+  --encontrado: #17776f;
+  --resolvido: #7b8794;
+  --foco: #1d4ed8;
+  --fonte: "Bricolage Grotesque", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--tinta);
+  font-family: var(--fonte);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+/* ---------- topo ---------- */
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 4vw, 3rem);
+  background: var(--tinta);
+  color: #fff;
+}
+
+.marca {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.pagina {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 4vw, 3rem) 4rem;
+}
+
+/* ---------- botões ---------- */
+.botao,
+.botao-contorno,
+.botao-texto {
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  border: 2px solid #fff;
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--tinta);
+  text-decoration: none;
+}
+
+.formulario .botao,
+.vazio .botao {
+  border-color: var(--tinta);
+  background: var(--tinta);
+  color: #fff;
+}
+
+.botao:hover { opacity: 0.88; }
+
+.botao-contorno {
+  padding: 0.5rem 0.9rem;
+  border: 2px solid var(--tinta);
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--tinta);
+}
+
+.botao-contorno:hover {
+  background: var(--tinta);
+  color: #fff;
+}
+
+.botao-texto {
+  padding: 0.5rem 0.2rem;
+  border: 0;
+  background: none;
+  color: var(--tinta-suave);
+  text-decoration: underline;
+}
+
+/* ---------- avisos ---------- */
+.avisos {
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.aviso {
+  padding: 0.7rem 1rem;
+  border-radius: 0.4rem;
+  background: #dff3ef;
+  color: #0d4a44;
+}
+
+.aviso-erro {
+  background: #fbe3e3;
+  color: #7a1f1f;
+}
+
+/* ---------- abertura ---------- */
+.abertura h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.abertura p {
+  max-width: 60ch;
+  margin: 0 0 1.75rem;
+  color: var(--tinta-suave);
+}
+
+/* ---------- filtros ---------- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.filtro {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem;
+  border: 2px solid var(--tinta);
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.filtro:hover { background: #fff; }
+
+.filtro.ativo {
+  background: var(--tinta);
+  color: #fff;
+}
+
+.contagem {
+  min-width: 1.5rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: rgba(23, 34, 45, 0.12);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.filtro.ativo .contagem { background: rgba(255, 255, 255, 0.25); }
+
+/* ---------- mural de etiquetas ---------- */
+.mural {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.etiqueta {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--linha);
+  border-radius: 0.3rem 0.3rem 1.5rem 0.3rem;
+  background: var(--papel);
+}
+
+.etiqueta-topo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem 0.7rem 2.6rem;
+  color: #fff;
+  font-weight: 800;
+}
+
+.etiqueta-perdido .etiqueta-topo { background: var(--perdido); }
+.etiqueta-encontrado .etiqueta-topo { background: var(--encontrado); }
+.etiqueta.resolvida .etiqueta-topo { background: var(--resolvido); }
+
+/* furo da etiqueta, como nas etiquetas de mala */
+.furo {
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--fundo);
+  transform: translateY(-50%);
+}
+
+.selo {
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--tinta);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.etiqueta-corpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.etiqueta.resolvida .etiqueta-corpo { opacity: 0.75; }
+
+.etiqueta h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.descricao {
+  margin: 0;
+  color: var(--tinta-suave);
+  overflow-wrap: anywhere;
+}
+
+.dados {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.dados dt {
+  color: var(--tinta-suave);
+}
+
+.dados dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.etiqueta-corpo form {
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+/* ---------- estado vazio ---------- */
+.vazio {
+  padding: 2.5rem 1.5rem;
+  border: 2px dashed var(--linha);
+  border-radius: 0.6rem;
+  text-align: center;
+}
+
+.vazio h2 { margin: 0 0 0.25rem; }
+.vazio p { margin: 0 0 1.25rem; color: var(--tinta-suave); }
+
+/* ---------- formulário ---------- */
+.formulario {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 36rem;
+}
+
+.escolha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.escolha legend {
+  margin-bottom: 0.5rem;
+  padding: 0;
+  font-weight: 600;
+}
+
+.opcao {
+  position: relative;
+  cursor: pointer;
+}
+
+.opcao input {
+  position: absolute;
+  opacity: 0;
+}
+
+.opcao span {
+  display: block;
+  padding: 0.9rem 1rem;
+  border: 2px solid var(--linha);
+  border-radius: 0.4rem;
+  background: var(--papel);
+  font-weight: 600;
+  text-align: center;
+}
+
+.opcao input:checked + span { color: #fff; }
+.opcao-perdido input:checked + span { background: var(--perdido); border-color: var(--perdido); }
+.opcao-encontrado input:checked + span { background: var(--encontrado); border-color: var(--encontrado); }
+.opcao input:focus-visible + span {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.campo {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.campo label { font-weight: 600; }
+
+.campo input,
+.campo textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 2px solid var(--linha);
+  border-radius: 0.4rem;
+  background: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+}
+
+.campo textarea { resize: vertical; }
+
+.campo input:focus,
+.campo textarea:focus {
+  border-color: var(--foco);
+  outline: none;
+}
+
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.acoes .botao-texto { text-decoration: underline; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .botao,
+  .botao-contorno,
+  .filtro { transition: background-color 0.15s, color 0.15s, opacity 0.15s; }
+}

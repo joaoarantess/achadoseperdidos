@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<section class="abertura">
+  <h1>Perdeu algo? Achou algo?<br>Deixe o recado no mural.</h1>
+  <p>Os itens abertos aparecem primeiro. Quando o dono receber o objeto de volta, marque como devolvido.</p>
+</section>
+
+<nav class="filtros" aria-label="Filtrar itens">
+  {% set abas = [("todos", "Todos"), ("perdidos", "Perdidos"), ("encontrados", "Encontrados")] %}
+  {% for chave, rotulo in abas %}
+    <a href="{{ url_for('index', filtro=chave) }}"
+       class="filtro{% if filtro == chave %} ativo{% endif %}"
+       {% if filtro == chave %}aria-current="page"{% endif %}>
+      {{ rotulo }} <span class="contagem">{{ contagem[chave] }}</span>
+    </a>
+  {% endfor %}
+</nav>
+
+{% if itens %}
+  <ul class="mural">
+    {% for item in itens %}
+      <li class="etiqueta etiqueta-{{ item.tipo }}{% if item.resolvido %} resolvida{% endif %}">
+        <div class="etiqueta-topo">
+          <span class="furo" aria-hidden="true"></span>
+          <span class="tipo">{{ "Perdido" if item.tipo == "perdido" else "Encontrado" }}</span>
+          {% if item.resolvido %}
+            <span class="selo">{{ "Devolvido" if item.tipo == "encontrado" else "Resolvido" }}</span>
+          {% endif %}
+        </div>
+
+        <div class="etiqueta-corpo">
+          <h2>{{ item.nome }}</h2>
+          <p class="descricao">{{ item.descricao }}</p>
+
+          <dl class="dados">
+            <dt>Local</dt>
+            <dd>{{ item.local }}</dd>
+            <dt>Contato</dt>
+            <dd>{{ item.contato }}</dd>
+            <dt>Cadastrado em</dt>
+            <dd>{{ item.criado_em | data_br }}</dd>
+            {% if item.resolvido and item.resolvido_em %}
+              <dt>Resolvido em</dt>
+              <dd>{{ item.resolvido_em | data_br }}</dd>
+            {% endif %}
+          </dl>
+
+          {% if item.resolvido %}
+            <form method="post" action="{{ url_for('reabrir', item_id=item.id) }}">
+              <input type="hidden" name="filtro" value="{{ filtro }}">
+              <button type="submit" class="botao-texto">Reabrir item</button>
+            </form>
+          {% else %}
+            <form method="post" action="{{ url_for('resolver', item_id=item.id) }}">
+              <input type="hidden" name="filtro" value="{{ filtro }}">
+              <button type="submit" class="botao-contorno">
+                {{ "Marcar como devolvido" if item.tipo == "encontrado" else "Marcar como resolvido" }}
+              </button>
+            </form>
+          {% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <section class="vazio">
+    <h2>Nenhum item nesta lista.</h2>
+    <p>Cadastre o primeiro para ele aparecer no mural.</p>
+    <a class="botao" href="{{ url_for('novo') }}">Cadastrar item</a>
+  </section>
+{% endif %}
+{% endblock %}

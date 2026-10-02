@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block titulo %}Cadastrar item · Achados e perdidos{% endblock %}
+
+{% block conteudo %}
+<section class="abertura">
+  <h1>Cadastrar item</h1>
+  <p>Descreva o objeto com detalhes que ajudem o dono a reconhecê-lo, como cor, marca e marcas de uso.</p>
+</section>
+
+<form class="formulario" method="post" action="{{ url_for('novo') }}">
+  <fieldset class="escolha">
+    <legend>O que aconteceu?</legend>
+    <label class="opcao opcao-perdido">
+      <input type="radio" name="tipo" value="perdido" required
+             {% if form.get('tipo') == 'perdido' %}checked{% endif %}>
+      <span>Perdi algo</span>
+    </label>
+    <label class="opcao opcao-encontrado">
+      <input type="radio" name="tipo" value="encontrado" required
+             {% if form.get('tipo') == 'encontrado' %}checked{% endif %}>
+      <span>Encontrei algo</span>
+    </label>
+  </fieldset>
+
+  <div class="campo">
+    <label for="nome">Nome do item</label>
+    <input id="nome" name="nome" type="text" maxlength="80" required
+           value="{{ form.get('nome', '') }}" placeholder="Ex.: Garrafa térmica azul">
+  </div>
+
+  <div class="campo">
+    <label for="descricao">Descrição</label>
+    <textarea id="descricao" name="descricao" rows="4" maxlength="500" required
+              placeholder="Cor, marca, adesivos, arranhões...">{{ form.get('descricao', '') }}</textarea>
+  </div>
+
+  <div class="campo">
+    <label for="local">Local</label>
+    <input id="local" name="local" type="text" maxlength="100" required
+           value="{{ form.get('local', '') }}" placeholder="Ex.: Quadra, biblioteca, sala 12">
+  </div>
+
+  <div class="campo">
+    <label for="contato">Contato</label>
+    <input id="contato" name="contato" type="text" maxlength="100" required
+           value="{{ form.get('contato', '') }}" placeholder="Telefone, e-mail ou onde te encontrar">
+  </div>
+
+  <div class="acoes">
+    <button type="submit" class="botao">Publicar no mural</button>
+    <a class="botao-texto" href="{{ url_for('index') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}
